@@ -31,7 +31,9 @@ const CartScreen = () => {
     navigate(`/cart`)
   }
 
-  const checkoutHandler=()=>{}
+  const checkoutHandler=()=>{
+    navigate('/shipping')
+  }
   return (
     <Row>
       <Col md={8}>

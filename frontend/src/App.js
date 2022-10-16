@@ -7,6 +7,10 @@ import Loginscreen from './screens/LoginScreen'
 import CartScreen from "./screens/CartScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import ProfileScreen from "./screens/ProfileScreen";
+import ShippingScreen from "./screens/ShippingScreen";
+import PaymentScreen from "./screens/PaymentScreen";
+import PlaceOrderScreen from "./screens/PlaceOrderScreen";
+import OrderScreen from "./screens/OrderScreen";
 import {Container} from 'react-bootstrap'
 
 function App() {
@@ -16,6 +20,7 @@ function App() {
     <main className="py-3">
     <Container>
     <Routes>
+
         <Route path='/' element={<HomeScreen />} />
         <Route path='/login' element={<Loginscreen/>}/>
         <Route path='/profile' element={<ProfileScreen />}/>
@@ -23,6 +28,11 @@ function App() {
         <Route path='/product/:id' element={<ProductScreen />} />
         <Route path='/cart/:id' element={<CartScreen />} />
         <Route path='/cart/' element={<CartScreen />} />
+        <Route path='/shipping' element={<ShippingScreen />} />
+        <Route path='/payment' element={<PaymentScreen />} />
+        <Route path='/placeorder' element={<PlaceOrderScreen />} />
+        <Route path='/order/:id' element={<OrderScreen />} />
+
         
     </Routes>
     </Container>
