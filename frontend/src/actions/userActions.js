@@ -13,9 +13,16 @@ import {USER_LOGIN_REQUEST,
     USER_UPDATE_PROFILE_REQUEST,
     USER_UPDATE_PROFILE_SUCCESS,
     USER_UPDATE_PROFILE_FAIL,
+    USER_LIST_REQUEST,
+    USER_LIST_SUCCESS,
+    USER_LIST_FAIL,
+    USER_LIST_RESET,
+    USER_UPDATE_REQUEST,
+    USER_UPDATE_SUCCESS,
+    USER_UPDATE_FAIL,
+    USER_UPDATE_RESET
 } from '../constants/userConstants.js'
-import { ORDER_LIST_MY_RESET } from '../constants/orderConstants.js'
-
+import {ORDER_LIST_MY_RESET} from '../constants/orderConstants.js'
 export const login=(email, password)=>async(dispatch)=>{
     console.log('In LoginAction')
     try{
@@ -50,6 +57,7 @@ export const logout=()=>(dispatch)=>{
     dispatch({type: USER_LOGOUT})
     dispatch({type: USER_DETAILS_RESET})
     dispatch({type: ORDER_LIST_MY_RESET})
+    dispatch({type: USER_LIST_RESET})
 }
 
 export const register=(name, email, password)=>async(dispatch)=>{
@@ -146,6 +154,72 @@ export const updateUserProfile=(user)=>async(dispatch, getState)=>{
         console.log(error)
         dispatch({
             type: USER_UPDATE_PROFILE_FAIL,
+            payload: error.response && error.response.data.message? error.response.data.message: error.message
+        })
+    }
+}
+
+export const listUsers=()=>async(dispatch, getState)=>{
+    console.log('In ListUsers')
+    try{
+        dispatch({
+            type: USER_LIST_REQUEST
+        })
+
+        const { userLogin:{userInfo}}=getState()
+        //console.log(userLogin)
+        const config={
+            headers:{
+                Authorization: `Bearer ${userInfo.token}`,
+            }
+        }
+        console.log('CONFIG in ListUsers:', config)
+        const {data}=await axios.get(`http://127.0.0.1:5000/api/users`, config)
+        console.log('LIST of USERS:',data)
+        dispatch({
+            type: USER_LIST_SUCCESS,
+            payload:data
+        })
+
+    }
+    catch(error){
+        console.log(error)
+        dispatch({
+            type: USER_LIST_FAIL,
+            payload: error.response && error.response.data.message? error.response.data.message: error.message
+        })
+    }
+}
+
+export const updateUser=(user)=>async(dispatch, getState)=>{
+    console.log('In UpdateUser')
+    try{
+        dispatch({
+            type: USER_UPDATE_REQUEST
+        })
+
+        const { userLogin:{userInfo}}=getState()
+        //console.log(userLogin)
+        const config={
+            headers:{
+                Authorization: `Bearer ${userInfo.token}`,
+            }
+        }
+        console.log('CONFIG in UpdateUsers:', config)
+        const {data}=await axios.get(`http://127.0.0.1:5000/api/users/${user._id}`, user, config)
+        console.log('Updated USERS:',data)
+        dispatch({
+            type: USER_UPDATE_SUCCESS,
+        })
+        dispatch({
+            type: USER_DETAILS_SUCCESS, payload: data
+        })
+
+    }
+    catch(error){
+        console.log(error)
+        dispatch({
+            type: USER_UPDATE_FAIL,
             payload: error.response && error.response.data.message? error.response.data.message: error.message
         })
     }

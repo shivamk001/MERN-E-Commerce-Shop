@@ -148,3 +148,70 @@ export const listMyOrders=()=>async(dispatch, getState)=>{
         })
     }
 }
+
+export const listOrders=()=>async(dispatch, getState)=>{
+    console.log('In listOrders')
+    
+    try{
+        dispatch({
+            type: ORDER_LIST_MY_REQUEST,
+        })
+
+        const { userLogin }=getState()
+        console.log('USERINFO:',userLogin)
+        const config={
+            headers:{
+                Authorization: `Bearer ${userLogin.userInfo.token}`,
+            }
+        }
+        console.log('CONFIG in getOrderDetails:', config)
+        const {data}=await axios.get(`http://127.0.0.1:5000/api/orders`, config)
+        console.log('ORDER LIST:',data)
+        dispatch({
+            type: ORDER_LIST_MY_SUCCESS,
+            payload:data
+        })
+
+    }
+    catch(error){
+        console.log(error)
+        dispatch({
+            type: ORDER_LIST_MY_FAIL,
+            payload: error.response && error.response.data.message? error.response.data.message: error.message
+        })
+    }
+}
+
+export const deliverOrder=(order)=>async(dispatch, getState)=>{
+    console.log('In deliverOrder')
+    console.log('ORDER:',order)
+    try{
+        dispatch({
+            type: ORDER_PAY_REQUEST,
+        })
+
+        const { userLogin }=getState()
+        console.log('USERINFO:',userLogin)
+        const config={
+            headers:{
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userLogin.userInfo.token}`,
+            }
+        }
+        console.log('CONFIG in getOrderDetails:', config)
+        const {data}=await axios.put(`http://127.0.0.1:5000/api/orders/${order._id}/pay`, config)
+        console.log('ORDER PAY:',data)
+        dispatch({
+            type: ORDER_PAY_SUCCESS,
+            payload:data
+        })
+
+    }
+    catch(error){
+        console.log(error)
+        dispatch({
+            type: ORDER_PAY_FAIL,
+            payload: error.response && error.response.data.message? error.response.data.message: error.message
+        })
+    }
+}

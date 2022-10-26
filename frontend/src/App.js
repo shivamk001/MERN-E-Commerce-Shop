@@ -11,6 +11,10 @@ import ShippingScreen from "./screens/ShippingScreen";
 import PaymentScreen from "./screens/PaymentScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import OrderScreen from "./screens/OrderScreen";
+import UserListScreen from "./screens/UserListScreen";
+import UserEditScreen from "./screens/UserEditScreen";
+import ProductListScreen from './screens/ProductListScreen'
+import OrderListScreen from "./screens/OrderListScreen";
 import {Container} from 'react-bootstrap'
 
 function App() {
@@ -25,6 +29,11 @@ function App() {
         <Route path='/login' element={<Loginscreen/>}/>
         <Route path='/profile' element={<ProfileScreen />}/>
         <Route path='/register' element={<RegisterScreen/>}/>
+        <Route path='/admin/userlist' element={<UserListScreen />} />
+        <Route path='/admin/user/:id/edit' element={<UserEditScreen />} />
+        <Route path='/admin/productlist' element={<ProductListScreen />} exact/>
+        <Route path='/admin/productlist/:pageNumber' element={<ProductListScreen />} exact/>
+        <Route path='/admin/orderlist' element={<OrderListScreen />} />
         <Route path='/product/:id' element={<ProductScreen />} />
         <Route path='/cart/:id' element={<CartScreen />} />
         <Route path='/cart/' element={<CartScreen />} />
@@ -32,6 +41,10 @@ function App() {
         <Route path='/payment' element={<PaymentScreen />} />
         <Route path='/placeorder' element={<PlaceOrderScreen />} />
         <Route path='/order/:id' element={<OrderScreen />} />
+        <Route path='/page/:pageNumber' element={<HomeScreen />} />
+        <Route path='/search/:keyword/page/:pageNumber' element={<HomeScreen />}/>
+        <Route path='/search/:keyword' element={<HomeScreen />} exact />
+        
 
         
     </Routes>
