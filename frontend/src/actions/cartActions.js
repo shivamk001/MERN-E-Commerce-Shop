@@ -3,7 +3,7 @@ import {CART_ADD_ITEM, CART_REMOVE_ITEM, CART_SAVE_SHIPPING_ADDRESS, CART_SAVE_P
 
 export const addToCart=(id, qty)=>async(dispatch, getState)=>{
     console.log('ID in ADDTOCART:', id)
-    const {data}= await axios.get(`http://127.0.0.1:5000/api/products/${id}`)
+    const {data}= await axios.get(`/api/products/${id}`)
     console.log('CART DATA:', data)
 
         dispatch({type: CART_ADD_ITEM,

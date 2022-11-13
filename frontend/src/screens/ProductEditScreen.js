@@ -82,7 +82,7 @@ const ProductEditScreen=()=>{
                     'Content-Type':'multipart/form-data'
                 }
             }
-           const {data}=await axios.post('http://127.0.0.1:5000/api/upload',formData, config)
+           const {data}=await axios.post('/api/upload',formData, config)
            setImage(data)
            setUploading(false)
         }

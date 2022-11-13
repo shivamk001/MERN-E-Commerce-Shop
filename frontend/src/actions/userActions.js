@@ -39,7 +39,7 @@ export const login=(email, password)=>async(dispatch)=>{
             }
         }
         //console.log(email, password, config)
-        const {data}=await axios.post('http://127.0.0.1:5000/api/users/login', {email,password}, config)
+        const {data}=await axios.post('/api/users/login', {email,password}, config)
         console.log(data)
         dispatch({
             type: USER_LOGIN_SUCCESS,
@@ -76,7 +76,7 @@ export const register=(name, email, password)=>async(dispatch)=>{
             }
         }
         console.log(email, password, config)
-        const {data}=await axios.post('http://127.0.0.1:5000/api/users', {name,email,password}, config)
+        const {data}=await axios.post('/api/users', {name,email,password}, config)
         console.log(data)
         dispatch({
             type: USER_REGISTER_SUCCESS,
@@ -113,7 +113,7 @@ export const getUserDetails=(id)=>async(dispatch, getState)=>{
             }
         }
         console.log('CONFIG in getUserDetails:', config)
-        const {data}=await axios.get(`http://127.0.0.1:5000/api/users/${id}`, config)
+        const {data}=await axios.get(`/api/users/${id}`, config)
         console.log('USERDETAILS:',data)
         dispatch({
             type: USER_DETAILS_SUCCESS,
@@ -146,7 +146,7 @@ export const updateUserProfile=(user)=>async(dispatch, getState)=>{
             }
         }
         console.log('CONFIG in getUserDetails:', config)
-        const {data}=await axios.put(`http://127.0.0.1:5000/api/users/profile`, user, config)
+        const {data}=await axios.put(`/api/users/profile`, user, config)
         console.log('AFTER UPDATE:',data)
         dispatch({
             type: USER_UPDATE_PROFILE_SUCCESS,
@@ -185,7 +185,7 @@ export const listUsers=()=>async(dispatch, getState)=>{
             }
         }
         console.log('CONFIG in ListUsers:', config)
-        const {data}=await axios.get(`http://127.0.0.1:5000/api/users`, config)
+        const {data}=await axios.get(`/api/users`, config)
         console.log('LIST of USERS:',data)
         dispatch({
             type: USER_LIST_SUCCESS,
@@ -217,7 +217,7 @@ export const updateUser=(user)=>async(dispatch, getState)=>{
             }
         }
         console.log('CONFIG in UpdateUsers:', config)
-        const {data}=await axios.get(`http://127.0.0.1:5000/api/users/${user._id}`, user, config)
+        const {data}=await axios.get(`/api/users/${user._id}`, user, config)
         console.log('Updated USERS:',data)
         dispatch({
             type: USER_UPDATE_SUCCESS,
@@ -251,7 +251,7 @@ export const deleteUser=(id)=>async(dispatch, getState)=>{
             }
         }
         console.log('CONFIG in deleteUsers:', config)
-        await axios.delete(`http://127.0.0.1:5000/api/users/${id}`, config)
+        await axios.delete(`/api/users/${id}`, config)
         //console.log('Updated USERS:',data)
         dispatch({
             type: USER_DELETE_SUCCESS
