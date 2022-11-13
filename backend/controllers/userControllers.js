@@ -50,7 +50,9 @@ const getUserProfile=asyncHandler(async(req,res)=>{
 //@access Public
 const registerUser=asyncHandler(async(req,res)=>{
     const {name,email, password}=req.body
+    console.log('NAME, EMAIL, PASSWORD:', name, email, password)
     const userExists=await User.findOne({email})
+    console.log('USEREXISTS:', userExists)
 
     if(userExists){
         res.status(400)
@@ -151,4 +153,20 @@ const updateUser=asyncHandler(async(req,res)=>{
         throw new Error('User not found')
     }
 })
-export {authUser, getUserProfile, registerUser, updateUserProfile, getUsers, getUserById, updateUser}
+
+//@desc Fetch a product
+//@route DELETE /api/users/id
+//@access Private/Admin
+const deleteUser=asyncHandler(async(req, res)=>{
+    console.log('USER ID:', req.params.id)
+    const user=await User.findByIdAndRemove(req.params.id)
+    console.log("USER:",user)
+    if(user){
+        res.status(200).json({message:'User deleted'})
+    }
+    else{
+        res.status(404)
+        throw new Error('User not found')
+    }
+})
+export {authUser, getUserProfile, registerUser, updateUserProfile, getUsers, getUserById, updateUser, deleteUser}

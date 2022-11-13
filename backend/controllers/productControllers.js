@@ -38,8 +38,7 @@ const getProductById=asyncHandler(async (req,res)=>{
 //@route GET /api/products/id
 //@access Public
 const deleteProduct=asyncHandler(async (req,res)=>{
-    const product=await Product.findById(req.params.id)
-
+    const product=await Product.findByIdAndRemove(req.params.id)
     if(product){
         await product.remove()
         res.json({message: 'Product removed'})

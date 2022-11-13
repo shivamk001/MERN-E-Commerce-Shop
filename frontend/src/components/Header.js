@@ -11,8 +11,8 @@ const Header = () => {
   const dispatch=useDispatch()
   const userLogin=useSelector(state=>state.userLogin)
   const {userInfo}=userLogin
-  console.log('USERINFO:', userInfo)
-  console.log(userInfo,' in Header')
+  //console.log('USERINFO:', userInfo)
+  //console.log(userInfo,' in Header')
   const logoutHandler=()=>{
     dispatch(logout())
   }

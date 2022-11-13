@@ -23,7 +23,7 @@ const HomeScreen = () => {
   const {loading,error,products, page, pages}=productList
 
   useEffect(()=>{
-    console.log('KEYWORD:',keyword)
+    //console.log('KEYWORD:',keyword)
     dispatch(ListProducts(keyword, pageNumber))
   },[dispatch, keyword, pageNumber])
   return (

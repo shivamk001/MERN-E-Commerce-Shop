@@ -3,7 +3,7 @@ import { configureStore } from '@reduxjs/toolkit'
 //import {composeWithDevTools} from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
 import { productListReducer, productDetailsReducer, productDeleteReducer, productCreateReducer, productUpdateReducer, productCreateReviewReducer, productTopRatedReducer } from './reducers/productReducers'
-import { userLoginReducer } from './reducers/userReducers'
+import { userDeleteReducer, userLoginReducer } from './reducers/userReducers'
 import { cartReducers } from './reducers/cartReducers'
 import { userRegisterReducer, userDetailsReducer, userUpdateProfileReducer, userListReducer, userUpdateReducer } from './reducers/userReducers'
 import { orderCreateReducer, orderDetailsReducer, orderPayReducer, orderListMyReducer, orderListReducer, orderDeliverReducer } from './reducers/orderReducers'
@@ -21,6 +21,7 @@ const reducer=combineReducers({
     userRegister: userRegisterReducer,
     userDetails: userDetailsReducer,
     userUpdateProfile: userUpdateProfileReducer,
+    userDelete: userDeleteReducer,
     orderCreate: orderCreateReducer,
     orderDetails: orderDetailsReducer,
     orderPay: orderPayReducer,

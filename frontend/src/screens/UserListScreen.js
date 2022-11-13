@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
-import { listUsers } from "../actions/userActions"
+import { listUsers, deleteUser } from "../actions/userActions"
 // import FormContainer from "../components/FormContainer";
 import {LinkContainer} from 'react-router-bootstrap'
 const UserListScreen=()=>{
@@ -30,7 +30,8 @@ const UserListScreen=()=>{
     },[navigate, userInfo])
 
     const deleteHandler=(id)=>{
-        console.log('User Deleted')
+        console.log('User Deleted:', id)
+        dispatch(deleteUser(id))
     }
     return  <>
         <h1>Users</h1>

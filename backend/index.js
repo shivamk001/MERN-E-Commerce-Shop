@@ -22,9 +22,6 @@ if(process.env.NODE_ENV==='development'){
 app.use(express.json())
 app.use(cors())
 connectDB()
-app.get('/',(req,res)=>{
-    res.send('API is running!')
-})
 
 // app.get('/api/products',(req,res)=>{
 //     res.json(products)
@@ -40,13 +37,26 @@ app.use('/api/products', (req, res, next)=>{console.log('PRODUCTROUTES MIDWARE')
 app.use('/api/users', userRoutes)
 app.use('/api/orders', orderRoutes)
 app.use('/api/upload', uploadRoutes)
-app.use(notFound)
-app.use(errorHandler)
 app.get('/api/config/paypal', (req,res)=>res.send(process.env.PAYPAL_CLIENT_ID))
 
+
+
 const __dirname=path.resolve()
-console.log('__DIRNAME:',path.join(__dirname, '/uploads'))
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
+if(process.env.NODE_ENV==='production'){
+    console.log('PRODUCTION:',process.env.NODE_ENV, path.join(__dirname, '/frontend/build'))
+    app.use(express.static(path.join(__dirname, '/frontend/build')))
+    app.get('*', (req,res)=>res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html')))
+}
+else{
+    app.get('/',(req,res)=>{
+        res.send('API is running!')
+    })
+}
+console.log('__DIRNAME:',path.join(__dirname, '/uploads'))
+
+app.use(notFound)
+app.use(errorHandler)
 
 const PORT=process.env.PORT||5000
 app.listen(5000, console.log(`Server is running in ${process.env.NODE_ENV} at port ${PORT}!`.yellow.bold))

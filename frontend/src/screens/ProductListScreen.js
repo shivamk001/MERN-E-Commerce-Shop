@@ -27,8 +27,8 @@ const ProductListScreen=()=>{
 
     const productCreate=useSelector(state=>state.productCreate)
     const {loading: loadingCreate, error: errorCreate, success: successCreate, product: createdProduct }=productCreate
-
-    const productDelete=useSelector(state=>state.productD)
+    console.log(productCreate)
+    const productDelete=useSelector(state=>state.productDelete)
     const {loading: loadingDelete, error: errorDelete, success: successDelete }=productDelete
 
     //console.log('LOGIN SEARCH',location.search, redirect)
@@ -40,9 +40,9 @@ const ProductListScreen=()=>{
             navigate('/login')
             //dispatch(ListProducts())
         }
-        if(successCreate){
-          navigate(`/admin/product/${createdProduct._id}/edit`)
-        }
+        // else if(successCreate){
+        //   navigate(`/admin/product/${createdProduct._id}/edit`)
+        // }
         else{
           dispatch(ListProducts('',pageNumber))
         }

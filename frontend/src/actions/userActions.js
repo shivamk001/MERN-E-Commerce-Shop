@@ -20,11 +20,15 @@ import {USER_LOGIN_REQUEST,
     USER_UPDATE_REQUEST,
     USER_UPDATE_SUCCESS,
     USER_UPDATE_FAIL,
-    USER_UPDATE_RESET
+    USER_UPDATE_RESET,
+    USER_DELETE_REQUEST,
+    USER_DELETE_SUCCESS,
+    USER_DELETE_FAIL,
+    USER_DELETE_RESET,
 } from '../constants/userConstants.js'
 import {ORDER_LIST_MY_RESET} from '../constants/orderConstants.js'
 export const login=(email, password)=>async(dispatch)=>{
-    console.log('In LoginAction')
+    //console.log('In LoginAction')
     try{
         dispatch({
             type: USER_LOGIN_REQUEST
@@ -34,7 +38,7 @@ export const login=(email, password)=>async(dispatch)=>{
                 'Content-Type': 'application/json'
             }
         }
-        console.log(email, password, config)
+        //console.log(email, password, config)
         const {data}=await axios.post('http://127.0.0.1:5000/api/users/login', {email,password}, config)
         console.log(data)
         dispatch({
@@ -149,6 +153,13 @@ export const updateUserProfile=(user)=>async(dispatch, getState)=>{
             payload:data
         })
 
+        dispatch({
+            type: USER_LOGIN_SUCCESS,
+            payload: data
+        })
+
+        localStorage.setItem('userInfo', JSON.stringify(data))
+
     }
     catch(error){
         console.log(error)
@@ -220,6 +231,37 @@ export const updateUser=(user)=>async(dispatch, getState)=>{
         console.log(error)
         dispatch({
             type: USER_UPDATE_FAIL,
+            payload: error.response && error.response.data.message? error.response.data.message: error.message
+        })
+    }
+}
+
+export const deleteUser=(id)=>async(dispatch, getState)=>{
+    console.log('In DeleteUSER')
+    try{
+        dispatch({
+            type: USER_DELETE_REQUEST
+        })
+
+        const { userLogin:{userInfo}}=getState()
+        //console.log(userLogin)
+        const config={
+            headers:{
+                Authorization: `Bearer ${userInfo.token}`,
+            }
+        }
+        console.log('CONFIG in deleteUsers:', config)
+        await axios.delete(`http://127.0.0.1:5000/api/users/${id}`, config)
+        //console.log('Updated USERS:',data)
+        dispatch({
+            type: USER_DELETE_SUCCESS
+        })
+
+    }
+    catch(error){
+        console.log(error)
+        dispatch({
+            type: USER_DELETE_FAIL,
             payload: error.response && error.response.data.message? error.response.data.message: error.message
         })
     }
